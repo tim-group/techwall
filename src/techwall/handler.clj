@@ -6,6 +6,7 @@
 
 (defroutes app-routes
   (GET "/" [] (resp/redirect "/index.html"))
+  (GET "/walls.json" [] {:headers {"Content-Type" "application/json"} :body "[{\"id\": 789, \"name\": \"Foo\"}]"})
   (route/resources "/")
   (route/not-found "Not Found"))
 
