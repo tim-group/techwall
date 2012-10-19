@@ -5,6 +5,7 @@
 /lib
 /classes
 /checkouts
+/.settings/ccw.repl.cmdhistory.prefs
 /.idea/workspace.xml
 /.idea/tasks.xml
 /.classpath
