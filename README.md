@@ -2,15 +2,19 @@
 
 A visualisation for technology categorisation.
 
-## Installation
+FIXME
 
-Download from http://example.com/FIXME.
+## Prerequisites
 
-## Usage
+You will need [Leiningen][1] 1.7.0 or above installed.
 
-FIXME: explanation
+[1]: https://github.com/technomancy/leiningen
 
-    $ java -jar techwall-0.1.0-standalone.jar [args]
+## Running
+
+To start a web server for the application, run:
+
+    lein ring server
 
 ## Options
 
