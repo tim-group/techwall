@@ -1,7 +1,14 @@
+/bin
+/build
+/out
 /target
 /lib
 /classes
 /checkouts
+/.idea/workspace.xml
+/.idea/tasks.xml
+/.classpath
+/.project
 pom.xml
 *.jar
 *.class
@@ -9,3 +16,5 @@ pom.xml
 .lein-failures
 .lein-plugins
 .lein-env
+*.swp
+*.*~
