@@ -19,39 +19,3 @@ body {
     float: left;
     width: 100%;
 }
-#banner {
-    margin: 0 auto 10px;
-    width: 940px;
-    height: 600px;
-    background: url("/images/welcome.jpg") repeat scroll 0 0 transparent;
-    -moz-border-radius: 10px 10px 10px 10px;
-}
-#links {
-    float: right;
-}
-#wall-list {
-    padding: 20px 0 0 0;
-    display: table;
-    margin: 0 auto;
-    width: 40%;
-}
-#wall-list ul {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
-#wall-list li {
-    margin: 0 0 3px 0;
-}
-#wall-list a {
-    font-size: 14px;
-    padding: 0px 0px 0px 15px;
-    display: block;
-    color: #ffffff;
-    background-color: #000306;
-    opacity: 0.2;
-    text-decoration: none;
-}
-#wall-list a:hover {
-    background: none;
-}

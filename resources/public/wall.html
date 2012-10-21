@@ -3,22 +3,11 @@
     <head>
         <title>Woot</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/css/wall.css">
         <link rel="stylesheet" type="text/css" href="/css/smoothness/jquery-ui-1.9.0.custom.min.css">
         <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
         <script type="text/javascript" src="/js/jquery-ui-1.9.0.custom.min.js"></script>
         <script type="text/javascript" src="/js/wall.js"></script>
-
-        <style>
-        .connectedSortable { list-style-type: none; margin: 0; padding: 0 0 2.5em; float: left; margin-right: 10px; }
-        .connectedSortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
-        </style>
-        <script>
-            $(function() {
-                $( ".connectedSortable" ).sortable({
-                    connectWith: ".connectedSortable"
-                }).disableSelection();
-            });
-        </script>
     </head>
     <body>
         <div id="header">
