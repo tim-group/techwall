@@ -9,21 +9,15 @@
         <script type="text/javascript" src="/js/wall.js"></script>
 
         <style>
-        .demo ul { list-style-type: none; margin: 0; padding: 0; margin-bottom: 10px; }
-        .demo li { margin: 5px; padding: 5px; width: 150px; }
+        .connectedSortable { list-style-type: none; margin: 0; padding: 0 0 2.5em; float: left; margin-right: 10px; }
+        .connectedSortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
         </style>
         <script>
-        $(function() {
-            $( "#sortable" ).sortable({
-                revert: true
+            $(function() {
+                $( ".connectedSortable" ).sortable({
+                    connectWith: ".connectedSortable"
+                }).disableSelection();
             });
-            $( "#draggable" ).draggable({
-                connectToSortable: "#sortable",
-                helper: "clone",
-                revert: "invalid"
-            });
-            $( "ul, li" ).disableSelection();
-        });
         </script>
     </head>
     <body>
@@ -31,16 +25,26 @@
             <span id="title">Oh, yeah</span>
         </div>
         <div class="demo">
-            <ul>
-                <li id="draggable" class="ui-state-highlight">Drag me down</li>
+            <ul class="connectedSortable">
+                <li class="ui-state-default">lift</li>
+                <li class="ui-state-default">erlang</li>
             </ul>
-        
-            <ul id="sortable">
-                <li class="ui-state-default">Item 1</li>
-                <li class="ui-state-default">Item 2</li>
-                <li class="ui-state-default">Item 3</li>
-                <li class="ui-state-default">Item 4</li>
-                <li class="ui-state-default">Item 5</li>
+             
+            <ul class="connectedSortable">
+                <li class="ui-state-highlight">clojure</li>
+                <li class="ui-state-highlight">play</li>
+            </ul>
+            <ul class="connectedSortable">
+                <li class="ui-state-default">java</li>
+                <li class="ui-state-default">junit</li>
+                <li class="ui-state-default">guava</li>
+            </ul>
+            <ul class="connectedSortable">
+                <li class="ui-state-highlight">easymock</li>
+                <li class="ui-state-highlight">test objects</li>
+            </ul>
+            <ul class="connectedSortable">
+                <li class="ui-state-default">lamdaj</li>
             </ul>
         </div>
     </body>
