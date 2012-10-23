@@ -1,12 +1,9 @@
 (ns techwall.db
-  (:require [clojureql.core :as ql]))
+  (:require [clojureql.core :as ql])
+  (:require [techwall.schema :as schema]))
 
-(def db
- {:classname   "org.h2.Driver"
-  :subprotocol "h2"
-  :user         ""
-  :password     ""
-  :subname      "~/test"})
+(schema/create-new)
 
-(ql/open-global db)
-@(ql/table "INFORMATION_SCHEMA.SCHEMATA")
+(ql/open-global schema/db)
+
+@(ql/table :walls)
