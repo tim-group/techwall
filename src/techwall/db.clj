@@ -2,7 +2,7 @@
   (:require [clojureql.core :as ql])
   (:require [techwall.schema :as schema]))
 
-(schema/create-new)
+(schema/create)
 
 (ql/open-global schema/db)
 
