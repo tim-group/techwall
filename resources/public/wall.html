@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Woot</title>
+        <title>Tech Wall</title>
         <link rel="stylesheet" type="text/css" href="/css/main.css">
         <link rel="stylesheet" type="text/css" href="/css/wall.css">
         <link rel="stylesheet" type="text/css" href="/css/smoothness/jquery-ui-1.9.0.custom.min.css">
         <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
         <script type="text/javascript" src="/js/jquery-ui-1.9.0.custom.min.js"></script>
+        <script type="text/javascript" src="/js/jquery.realisr.js"></script>
         <script type="text/javascript" src="/js/wall.js"></script>
     </head>
     <body>
@@ -14,48 +15,12 @@
             <span id="title">Oh, yeah</span>
         </div>
         <div class="wall">
-            <div class="column">
-                <ul class="connectedSortable">
-                    <li class="ui-state-default">lift</li>
-                    <li class="ui-state-default">erlang</li>
+            <div class="column template">
+                <h3 class="name">Column Name</h3>
+                <ul class="entries connectedSortable">
+                    <li class="entry ui-state-highlight template">Entry Name</li>
                 </ul>
-                <div class="ui-widget">
-                    <input class="tags" />
-                </div>
-            </div>
-            <div class="column">
-                <ul class="connectedSortable">
-                    <li class="ui-state-highlight">clojure</li>
-                    <li class="ui-state-highlight">play</li>
-                </ul>
-                <div class="ui-widget">
-                    <input class="tags" />
-                </div>
-            </div>
-            <div class="column">
-                <ul class="connectedSortable">
-                    <li class="ui-state-default">java</li>
-                    <li class="ui-state-default">junit</li>
-                    <li class="ui-state-default">guava</li>
-                </ul>
-                <div class="ui-widget">
-                    <input class="tags" />
-                </div>
-            </div>
-            <div class="column">
-                <ul class="connectedSortable">
-                    <li class="ui-state-highlight">easymock</li>
-                    <li class="ui-state-highlight">test objects</li>
-                </ul>
-                <div class="ui-widget">
-                    <input class="tags" />
-                </div>
-            </div>
-            <div class="column">
-                <ul class="connectedSortable">
-                    <li class="ui-state-default">lamdaj</li>
-                </ul>
-                <div class="ui-widget">
+                <div class="add-box ui-widget">
                     <input class="tags" />
                 </div>
             </div>

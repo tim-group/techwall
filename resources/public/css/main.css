@@ -4,10 +4,16 @@ body {
     line-height: 24px;
     margin: 0;
 }
+
+.template {
+    display: none !important;
+}
+
 #header {
     margin: 0 auto;
     width: 940px;
 }
+
 #title {
     float: left;
     padding: 10px;
@@ -15,6 +21,7 @@ body {
     font-size: 30px;
     color: #777777;
 }
+
 #content {
     float: left;
     width: 100%;
