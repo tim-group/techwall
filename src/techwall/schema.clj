@@ -6,7 +6,7 @@
    :subprotocol "h2"
    :subname      "~/techwall6"})
 
-(def ^{:private true} upgrades
+(def ^{:private true} migrations
   ["CREATE TABLE MIGRATIONS (ID INT PRIMARY KEY, EXECUTION_DATETIME TIMESTAMP)"
    "CREATE TABLE WALLS (ID INT PRIMARY KEY, NAME VARCHAR(255))"
    "CREATE TABLE CATEGORIES (ID INT PRIMARY KEY, NAME VARCHAR(255))"
@@ -23,9 +23,9 @@
 (defn create []
   (jdbc/with-connection db
     (loop [idx (next-upgrade-number)]
-      (if (< idx (count upgrades))
+      (if (< idx (count migrations))
         (do (jdbc/transaction
               (jdbc/do-commands
-                (upgrades idx)
+                (migrations idx)
                 (str "INSERT INTO MIGRATIONS VALUES (" idx ", NOW());")))
           (recur (inc idx)))))))
