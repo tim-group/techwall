@@ -1,8 +1,8 @@
 $(document).ready(function() {
     $.getJSON("/walls.json", function(wallListJson) {
         $.each(wallListJson, function(index, wallJson) {
-            var item = $("<li></li>").append($("<a></a>").attr("href", "/wall.html?id=" + wallJson.id).text(wallJson.name));
-            $("#wall-list ul").append(item);
+            var wallEntryView = $(".wall-entry").realise();
+            wallEntryView.find(".wall-link").attr("href", "/wall.html?id=" + wallJson.id).text(wallJson.name);
         });
     });
 });
