@@ -19,6 +19,10 @@ $(document).ready(function() {
                 addEntry(columnView, entry);
             });
         });
+        
+        $(".connectedSortable").sortable({
+            connectWith: ".connectedSortable"
+        }).disableSelection();
     }
 
     function hintTechnologies(names) {
@@ -30,10 +34,6 @@ $(document).ready(function() {
     $.getJSON("/walls/" + wallId + "/wall.json", renderWall);
     $.getJSON("/technologies.json", hintTechnologies);
     
-    $(".connectedSortable").sortable({
-        connectWith: ".connectedSortable"
-    }).disableSelection();
-
     $(".tags").keypress(function(e) {
         if (e.keyCode === $.ui.keyCode.ENTER) {
             var $el = $(this);
