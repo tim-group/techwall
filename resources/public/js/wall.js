@@ -1,5 +1,7 @@
 $(document).ready(function() {
-    var wallId = decodeURIComponent((new RegExp("[?|&]id=([\\d]+)").exec(location.search)||[,""])[1])||null;
+    var tagNames = [],
+        wallId = decodeURIComponent((new RegExp("[?|&]id=([\\d]+)").exec(location.search)||[,""])[1])||null;
+
     if (!wallId) {
         window.location.replace("/");
     }
@@ -20,25 +22,28 @@ $(document).ready(function() {
             });
         });
         
+        hintTechnologies();
+        $(".tags").keypress(function(e) {
+            if (e.keyCode === $.ui.keyCode.ENTER) {
+                var $el = $(this);
+                addEntry($el.closest(".column"), $el.val());
+                $el.val("");
+            }
+        });
         $(".connectedSortable").sortable({
             connectWith: ".connectedSortable"
         }).disableSelection();
     }
 
     function hintTechnologies(names) {
+        if (names) {
+            tagNames = names;
+        }
         $(".tags").autocomplete({
-            source: names
+            source: tagNames
         });
     }
 
     $.getJSON("/walls/" + wallId + "/wall.json", renderWall);
     $.getJSON("/technologies.json", hintTechnologies);
-    
-    $(".tags").keypress(function(e) {
-        if (e.keyCode === $.ui.keyCode.ENTER) {
-            var $el = $(this);
-            addEntry($el.closest(".column"), $el.val());
-            $el.val("");
-        }
-    });
 });
