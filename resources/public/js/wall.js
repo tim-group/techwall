@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var tagNames = [],
+    var technologyNames = [],
         wallId = decodeURIComponent((new RegExp("[?|&]id=([\\d]+)").exec(location.search)||[,""])[1])||null;
 
     if (!wallId) {
@@ -22,7 +22,7 @@ $(document).ready(function() {
             var categoryView = $(".category").realise().data("categoryId", category.id);
             categoryView.find(".name").text(category.name);
             $.each(category.entries, function(j, entry) {
-                addEntry(categoryView, entry);
+                addEntry(categoryView, entry.name).data("entryId", entry.id);
             });
         });
         
@@ -50,12 +50,15 @@ $(document).ready(function() {
         }).disableSelection();
     }
 
-    function hintTechnologies(names) {
-        if (names) {
-            tagNames = names;
+    function hintTechnologies(technologies) {
+        if (technologies) {
+            technologyNames = [];
+            $.each(technologies, function(i, technology) {
+                technologyNames.push(technology.name);
+            });
         }
         $(".add-entry").autocomplete({
-            source: tagNames
+            source: technologyNames
         });
     }
 
