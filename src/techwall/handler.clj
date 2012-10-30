@@ -9,11 +9,11 @@
 (def ^{:private true} technologies ["java" "scala" "ruby" "erlang"])
 (def ^{:private true} wall {:id 789
                             :name "Project Zappa"
-                            :columns [{:id 1 :name "Radical"    :entries ["erlang"]}
-                                      {:id 2 :name "Tentative"  :entries ["clojure" "play"]}
-                                      {:id 3 :name "Adopted"    :entries ["java" "junit" "guava"]}
-                                      {:id 4 :name "Deprecated" :entries ["easymock" "test objects"]}
-                                      {:id 5 :name "Obsolete"   :entries ["lambdaj"]}]})
+                            :categories [{:id 1 :name "Radical"    :entries ["erlang"]}
+                                         {:id 2 :name "Tentative"  :entries ["clojure" "play"]}
+                                         {:id 3 :name "Adopted"    :entries ["java" "junit" "guava"]}
+                                         {:id 4 :name "Deprecated" :entries ["easymock" "test objects"]}
+                                         {:id 5 :name "Obsolete"   :entries ["lambdaj"]}]})
 
 (defroutes app-routes
   (GET "/" [] (resp/redirect "/index.html"))

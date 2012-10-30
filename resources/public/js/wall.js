@@ -6,19 +6,19 @@ $(document).ready(function() {
         window.location.replace("/");
     }
 
-    function addEntry($columnView, name) {
-        return $columnView.find(".entry").realise().text(name);
+    function addEntry($categoryView, name) {
+        return $categoryView.find(".entry").realise().text(name);
     }
 
     function renderWall(wall) {
         $("#title").text(wall.name);
         document.title = wall.name;
         
-        $.each(wall.columns, function(i, column) {
-            var columnView = $(".column").realise().data("categoryId", column.id);
-            columnView.find(".name").text(column.name);
-            $.each(column.entries, function(j, entry) {
-                addEntry(columnView, entry);
+        $.each(wall.categories, function(i, category) {
+            var categoryView = $(".category").realise().data("categoryId", category.id);
+            categoryView.find(".name").text(category.name);
+            $.each(category.entries, function(j, entry) {
+                addEntry(categoryView, entry);
             });
         });
         
@@ -26,14 +26,14 @@ $(document).ready(function() {
         $(".tags").keypress(function(e) {
             if (e.keyCode === $.ui.keyCode.ENTER) {
                 var $el = $(this);
-                addEntry($el.closest(".column"), $el.val()).addClass("new-tech");
+                addEntry($el.closest(".category"), $el.val()).addClass("new-tech");
                 $el.val("");
             }
         });
         $(".connectedSortable").sortable({
             items: "li:not(.new-tech)",
             connectWith: ".connectedSortable",
-            receive: function(event, ui) { alert("receive from: " + ui.sender.closest(".column").data("categoryId") ); }
+            receive: function(event, ui) { alert("receive from: " + ui.sender.closest(".category").data("categoryId") ); }
         }).disableSelection();
     }
 
