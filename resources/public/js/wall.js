@@ -6,6 +6,10 @@ $(document).ready(function() {
         window.location.replace("/");
     }
 
+    function handleMove(fromId, toId, entryId, entryName) {
+        console.log("entry '" + entryName + "' (id: " + entryId + ") moved from: " + fromId + " to: " + toId);
+    }
+
     function addEntry($categoryView, name) {
         return $categoryView.find(".entry").realise().text(name);
     }
@@ -30,10 +34,19 @@ $(document).ready(function() {
                 $el.val("");
             }
         });
+        
+        function entryReceived(event, ui) {
+            var fromId = ui.sender.closest(".category").data("categoryId"),
+                toId = $(this).closest(".category").data("categoryId"),
+                entryId = ui.item.data("entryId"),
+                entryName = ui.item.text();
+            handleMove(fromId, toId, entryId, entryName);
+        }
+        
         $(".entry-list").sortable({
             items: "li:not(.new)",
             connectWith: ".entry-list",
-            receive: function(event, ui) { alert("receive from: " + ui.sender.closest(".category").data("categoryId")); }
+            receive: entryReceived
         }).disableSelection();
     }
 
