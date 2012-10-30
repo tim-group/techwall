@@ -26,14 +26,14 @@ $(document).ready(function() {
         $(".tags").keypress(function(e) {
             if (e.keyCode === $.ui.keyCode.ENTER) {
                 var $el = $(this);
-                addEntry($el.closest(".category"), $el.val()).addClass("new-tech");
+                addEntry($el.closest(".category"), $el.val()).addClass("new");
                 $el.val("");
             }
         });
-        $(".connectedSortable").sortable({
-            items: "li:not(.new-tech)",
-            connectWith: ".connectedSortable",
-            receive: function(event, ui) { alert("receive from: " + ui.sender.closest(".category").data("categoryId") ); }
+        $(".entry-list").sortable({
+            items: "li:not(.new)",
+            connectWith: ".entry-list",
+            receive: function(event, ui) { alert("receive from: " + ui.sender.closest(".category").data("categoryId")); }
         }).disableSelection();
     }
 

@@ -1,11 +1,11 @@
-.connectedSortable {
+.entry-list {
     list-style-type: none;
     margin: 0;
     padding: 0 0 2.5em;
     float: left;
     margin-right: 10px;
 }
-.connectedSortable li {
+.entry {
     margin: 0 5px 5px 5px;
     padding: 5px;
     font-size: 1.2em;
