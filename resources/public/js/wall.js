@@ -7,7 +7,7 @@ $(document).ready(function() {
     }
 
     function addEntry($columnView, name) {
-        $columnView.find(".entry").realise().text(name);
+        return $columnView.find(".entry").realise().text(name);
     }
 
     function renderWall(wall) {
@@ -15,7 +15,7 @@ $(document).ready(function() {
         document.title = wall.name;
         
         $.each(wall.columns, function(i, column) {
-            var columnView = $(".column").realise();
+            var columnView = $(".column").realise().data("categoryId", column.id);
             columnView.find(".name").text(column.name);
             $.each(column.entries, function(j, entry) {
                 addEntry(columnView, entry);
@@ -26,12 +26,14 @@ $(document).ready(function() {
         $(".tags").keypress(function(e) {
             if (e.keyCode === $.ui.keyCode.ENTER) {
                 var $el = $(this);
-                addEntry($el.closest(".column"), $el.val());
+                addEntry($el.closest(".column"), $el.val()).addClass("new-tech");
                 $el.val("");
             }
         });
         $(".connectedSortable").sortable({
-            connectWith: ".connectedSortable"
+            items: "li:not(.new-tech)",
+            connectWith: ".connectedSortable",
+            receive: function(event, ui) { alert("receive from: " + ui.sender.closest(".column").data("categoryId") ); }
         }).disableSelection();
     }
 
