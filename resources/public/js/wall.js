@@ -23,7 +23,7 @@ $(document).ready(function() {
         });
         
         hintTechnologies();
-        $(".tags").keypress(function(e) {
+        $(".add-entry").keypress(function(e) {
             if (e.keyCode === $.ui.keyCode.ENTER) {
                 var $el = $(this);
                 addEntry($el.closest(".category"), $el.val()).addClass("new");
@@ -41,7 +41,7 @@ $(document).ready(function() {
         if (names) {
             tagNames = names;
         }
-        $(".tags").autocomplete({
+        $(".add-entry").autocomplete({
             source: tagNames
         });
     }
