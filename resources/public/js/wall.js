@@ -6,8 +6,12 @@ $(document).ready(function() {
         window.location.replace("/");
     }
 
-    function handleMove(fromId, toId, entryId, entryName) {
-        console.log("entry '" + entryName + "' (id: " + entryId + ") moved from: " + fromId + " to: " + toId);
+    function persistMove(fromCategoryId, toCategoryId, entryId, entryName) {
+        console.log("entry '" + entryName + "' (id: " + entryId + ") moved from: " + fromCategoryId + " to: " + toCategoryId);
+    }
+
+    function persistAdd(toCategoryId, entryName) {
+        console.log("entry '" + entryName + "' added to: " + toCategoryId);
     }
 
     function addEntry($categoryView, name) {
@@ -31,6 +35,7 @@ $(document).ready(function() {
             if (e.keyCode === $.ui.keyCode.ENTER) {
                 var $el = $(this);
                 addEntry($el.closest(".category"), $el.val()).addClass("new");
+                persistAdd($el.closest(".category").data("categoryId"), $el.val());
                 $el.val("");
             }
         });
@@ -40,7 +45,7 @@ $(document).ready(function() {
                 toId = $(this).closest(".category").data("categoryId"),
                 entryId = ui.item.data("entryId"),
                 entryName = ui.item.text();
-            handleMove(fromId, toId, entryId, entryName);
+            persistMove(fromId, toId, entryId, entryName);
         }
         
         $(".entry-list").sortable({
