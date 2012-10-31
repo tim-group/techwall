@@ -14,7 +14,7 @@ $(document).ready(function() {
         console.log("entry '" + entryName + "' added to: " + toCategoryId);
     }
 
-    function addEntry($categoryView, name) {
+    function renderEntry($categoryView, name) {
         return $categoryView.find(".entry").realise().text(name);
     }
 
@@ -26,7 +26,7 @@ $(document).ready(function() {
             var categoryView = $(".category").realise().data("categoryId", category.id);
             categoryView.find(".name").text(category.name);
             $.each(category.entries, function(j, entry) {
-                addEntry(categoryView, entry.name).data("entryId", entry.id);
+                renderEntry(categoryView, entry.name).data("entryId", entry.id);
             });
         });
         
@@ -34,7 +34,7 @@ $(document).ready(function() {
         $(".add-entry").keypress(function(e) {
             if (e.keyCode === $.ui.keyCode.ENTER) {
                 var $el = $(this);
-                addEntry($el.closest(".category"), $el.val()).addClass("new");
+                renderEntry($el.closest(".category"), $el.val()).addClass("new");
                 persistAdd($el.closest(".category").data("categoryId"), $el.val());
                 $el.val("");
             }
