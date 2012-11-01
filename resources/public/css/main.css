@@ -15,7 +15,7 @@ body {
 }
 
 #title {
-    float: left;
+    margin: 5px;
     padding: 10px;
     font-weight: bold;
     font-size: 30px;
