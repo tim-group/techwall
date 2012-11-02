@@ -15,7 +15,8 @@
   {:headers {"Content-Type" "application/json"} :body (json/generate-string @(ql/table :walls))})
 
 (defn wall [wall-id]
-  (let [data @(->
+  (let [wall-name @(ql/pick (ql/select (ql/table :walls) (ql/where (= :id wall-id))) :name)
+        data @(->
                 (ql/select (ql/table {:transitions :a}) (ql/where (= :a.wall_id wall-id)))
                 (ql/join (ql/aggregate (ql/table {:transitions :b}) [[:max/ordering :as :latest]] [:technology_id :wall_id])
                          (ql/where (and (= :a.wall_id :b.wall_id)
@@ -24,12 +25,12 @@
                 (ql/join (ql/table {:categories :c}) (ql/where (= :a.category_id :c.id)))
                 (ql/join (ql/table {:technologies :d}) (ql/where (= :a.technology_id :d.id)))
                 (ql/select (ql/where (= :a.added 1)))
-                (ql/project [:a.category_id :a.technology_id [:c.name :as :category_name] [:d.name :as :technology_name]]))]
-    {:headers {"Content-Type" "application/json"} :body (json/generate-string 
-                                                          (reduce (fn [result [[category-id category-name] datum]] (conj result {:id category-id :name category-name :entries
-                                                                                                                                 (map #(identity {:id (:technology_id %) :name (:technology_name %)}) datum)}))
-                                                                  [] (group-by (fn [x] [(:category_id x) (:category_name x)]) data)))}
-    ))
+                (ql/project [:a.category_id :a.technology_id [:c.name :as :category_name] [:d.name :as :technology_name]]))
+        categories (reduce (fn [result [[category-id category-name] datum]]
+                             (conj result {:id category-id :name category-name :entries
+                                           (map #(identity {:id (:technology_id %) :name (:technology_name %)}) datum)}))
+                           [] (group-by (fn [x] [(:category_id x) (:category_name x)]) data))]
+    {:headers {"Content-Type" "application/json"} :body (json/generate-string {:id wall-id :name wall-name :categories categories})}))
 
 (defn add-entity [wall-id category-id tech-id tech-name]
   {:headers {"Content-Type" "application/json"} :body (json/generate-string {:id tech-id :name tech-name})})
