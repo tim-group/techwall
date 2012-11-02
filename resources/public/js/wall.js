@@ -12,7 +12,7 @@ $(document).ready(function() {
     }
 
     function persistMove(fromCategoryId, toCategoryId, entryId, entryName) {
-        postJSON("/wall/" + wallId + "/category/" + toCategoryId + "/entry", {"id": entryId, "name": entryName}, function() {
+        postJSON("/wall/" + wallId + "/category/" + toCategoryId + "/entry", {"techId": entryId, "techName": entryName}, function() {
             console.log("entry '" + entryName + "' (id: " + entryId + ") moved from: " + fromCategoryId + " to: " + toCategoryId);
         });
     }
