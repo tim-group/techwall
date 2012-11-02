@@ -1,7 +1,7 @@
 (ns techwall.walls
-  (:require [cheshire.core :as json]))
-
-(def ^{:private true} walls [{:id 789 :name "Foo"} {:id 342 :name "Bar"}])
+  (:use techwall.db)
+  (:require [cheshire.core :as json]
+            [clojureql.core :as ql]))
 
 (def ^{:private true} wall-data {:id 789
                                  :name "Project Zappa"
@@ -12,7 +12,7 @@
                                               {:id 5 :name "Obsolete"   :entries [{:id 11 :name "lambdaj"}]}]})
 
 (defn all [] 
-  {:headers {"Content-Type" "application/json"} :body (json/generate-string walls)})
+  {:headers {"Content-Type" "application/json"} :body (json/generate-string @(ql/table :walls))})
 
 (defn wall [id]
   {:headers {"Content-Type" "application/json"} :body (json/generate-string wall-data)})

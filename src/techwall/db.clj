@@ -3,7 +3,8 @@
   (:require [techwall.schema :as schema]))
 
 (schema/create)
-
 (ql/open-global schema/db)
 
-@(ql/table :walls)
+(if (= 0 (count @(ql/table :walls)))
+  (let [ins (ql/conj! (ql/table :walls) {:name "Example Wall"})]
+    (println (:last-index (meta ins)))))
