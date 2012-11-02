@@ -12,13 +12,13 @@ $(document).ready(function() {
     }
 
     function persistMove(fromCategoryId, toCategoryId, entryId, entryName) {
-        postJSON("/walls/" + wallId + "/categories/" + toCategoryId + "/entries", {"id": entryId, "name": entryName}, function() {
+        postJSON("/wall/" + wallId + "/category/" + toCategoryId + "/entry", {"id": entryId, "name": entryName}, function() {
             console.log("entry '" + entryName + "' (id: " + entryId + ") moved from: " + fromCategoryId + " to: " + toCategoryId);
         });
     }
 
     function persistAdd(toCategoryId, entryName) {
-        postJSON("/walls/" + wallId + "/categories/" + toCategoryId + "/entries", {"name": entryName}, function() {
+        postJSON("/wall/" + wallId + "/category/" + toCategoryId + "/entry", {"name": entryName}, function() {
             console.log("entry '" + entryName + "' added to: " + toCategoryId);
         });
     }
@@ -76,6 +76,6 @@ $(document).ready(function() {
         });
     }
 
-    $.getJSON("/walls/" + wallId + "/wall.json", renderWall);
-    $.getJSON("/technologies.json", hintTechnologies);
+    $.getJSON("/wall/" + wallId, renderWall);
+    $.getJSON("/technologies", hintTechnologies);
 });

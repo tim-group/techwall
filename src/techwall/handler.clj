@@ -17,10 +17,10 @@
 
 (defroutes app-routes
   (GET "/" [] (resp/redirect "/index.html"))
-  (GET "/walls.json" [] {:headers {"Content-Type" "application/json"} :body (json/generate-string walls) })
-  (GET "/technologies.json" [] {:headers {"Content-Type" "application/json"} :body (json/generate-string technologies) })
-  (GET "/walls/:id/wall.json" [] {:headers {"Content-Type" "application/json"} :body (json/generate-string wall)})
-  (POST "/walls/:wall-id/categories/:category-id/entries" [] "{}")
+  (GET "/technologies" [] {:headers {"Content-Type" "application/json"} :body (json/generate-string technologies) })
+  (GET "/walls" [] {:headers {"Content-Type" "application/json"} :body (json/generate-string walls) })
+  (GET "/wall/:id" [] {:headers {"Content-Type" "application/json"} :body (json/generate-string wall)})
+  (POST "/wall/:wall-id/category/:category-id/entry" [] "{}")
   (route/resources "/")
   (route/not-found "Not Found"))
 
