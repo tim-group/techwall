@@ -14,8 +14,23 @@
 (defn all [] 
   {:headers {"Content-Type" "application/json"} :body (json/generate-string @(ql/table :walls))})
 
-(defn wall [id]
-  {:headers {"Content-Type" "application/json"} :body (json/generate-string wall-data)})
+(defn wall [wall-id]
+  (let [data @(->
+                (ql/select (ql/table {:transitions :a}) (ql/where (= :a.wall_id wall-id)))
+                (ql/join (ql/aggregate (ql/table {:transitions :b}) [[:max/ordering :as :latest]] [:technology_id :wall_id])
+                         (ql/where (and (= :a.wall_id :b.wall_id)
+                                        (= :a.technology_id :b.technology_id)
+                                        (= :a.ordering :b.latest))))
+                (ql/join (ql/table {:categories :c}) (ql/where (= :a.category_id :c.id)))
+                (ql/join (ql/table {:technologies :d}) (ql/where (= :a.technology_id :d.id)))
+                (ql/select (ql/where (= :a.added 1)))
+                (ql/project [:a.category_id :a.technology_id [:c.name :as :category_name] [:d.name :as :technology_name]]))]
+    {:headers {"Content-Type" "application/json"} :body (json/generate-string 
+                                                          (reduce (fn [result [[category-id category-name] datum]] (conj result {:id category-id :name category-name :entries
+                                                                                                                                 (map #(identity {:id (:technology_id %) :name (:technology_name %)}) datum)}))
+                                                                  [] (group-by (fn [x] [(:category_id x) (:category_name x)]) data)))}
+    ))
 
 (defn add-entity [wall-id category-id tech-id tech-name]
   {:headers {"Content-Type" "application/json"} :body (json/generate-string {:id tech-id :name tech-name})})
+
