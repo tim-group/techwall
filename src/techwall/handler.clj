@@ -20,6 +20,7 @@
   (GET "/walls.json" [] {:headers {"Content-Type" "application/json"} :body (json/generate-string walls) })
   (GET "/technologies.json" [] {:headers {"Content-Type" "application/json"} :body (json/generate-string technologies) })
   (GET "/walls/:id/wall.json" [] {:headers {"Content-Type" "application/json"} :body (json/generate-string wall)})
+  (POST "/walls/:wall-id/categories/:category-id/entries" [] "{}")
   (route/resources "/")
   (route/not-found "Not Found"))
 

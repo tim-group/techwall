@@ -4,14 +4,23 @@ $(document).ready(function() {
 
     if (!wallId) {
         window.location.replace("/");
+        return;
+    }
+
+    function postJSON(url, data, successCallback) {
+        $.post(url, data, successCallback, "json");
     }
 
     function persistMove(fromCategoryId, toCategoryId, entryId, entryName) {
-        console.log("entry '" + entryName + "' (id: " + entryId + ") moved from: " + fromCategoryId + " to: " + toCategoryId);
+        postJSON("/walls/" + wallId + "/categories/" + toCategoryId + "/entries", {"id": entryId, "name": entryName}, function() {
+            console.log("entry '" + entryName + "' (id: " + entryId + ") moved from: " + fromCategoryId + " to: " + toCategoryId);
+        });
     }
 
     function persistAdd(toCategoryId, entryName) {
-        console.log("entry '" + entryName + "' added to: " + toCategoryId);
+        postJSON("/walls/" + wallId + "/categories/" + toCategoryId + "/entries", {"name": entryName}, function() {
+            console.log("entry '" + entryName + "' added to: " + toCategoryId);
+        });
     }
 
     function renderEntry($categoryView, name) {
