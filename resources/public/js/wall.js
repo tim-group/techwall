@@ -18,7 +18,7 @@ $(document).ready(function() {
     }
 
     function persistAdd(toCategoryId, entryName) {
-        postJSON("/wall/" + wallId + "/category/" + toCategoryId + "/entry", {"name": entryName}, function() {
+        postJSON("/wall/" + wallId + "/category/" + toCategoryId + "/entry", {"techName": entryName}, function() {
             console.log("entry '" + entryName + "' added to: " + toCategoryId);
         });
     }
