@@ -1,7 +1,8 @@
 (ns techwall.walls
   (:use techwall.db)
   (:require [cheshire.core :as json]
-            [clojureql.core :as ql]))
+            [clojureql.core :as ql]
+            [techwall.technologies :as tech]))
 
 (def ^{:private true} wall-data {:id 789
                                  :name "Project Zappa"
@@ -33,5 +34,7 @@
     {:headers {"Content-Type" "application/json"} :body (json/generate-string {:id wall-id :name wall-name :categories categories})}))
 
 (defn add-entity [wall-id category-id tech-id tech-name]
-  {:headers {"Content-Type" "application/json"} :body (json/generate-string {:id tech-id :name tech-name})})
+  (let [technology (tech/find-or-make tech-id tech-name)]
+    (ql/conj! (ql/table :transitions) {:wall_id wall-id :category_id category-id :technology_id (:id technology) :added 1})
+    {:headers {"Content-Type" "application/json"} :body (json/generate-string technology)}))
 
