@@ -7,6 +7,15 @@ $(document).ready(function() {
         return;
     }
 
+    function removeDuplicatesOf($entryView) {
+        var entryId = $entryView.data("entryId"),
+            entryView = $entryView.get(0);
+
+        $("li.entry").filter(function() {
+            return this !== entryView && $(this).data("entryId") === entryId;
+        }).remove();
+    }
+
     function persist($categoryView, $entryView) {
         var categoryId = $categoryView.data("categoryId"),
             entryId = $entryView.data("entryId"),
@@ -14,6 +23,7 @@ $(document).ready(function() {
 
         $.post("/wall/" + wallId + "/category/" + categoryId + "/entry", {"techId": entryId, "techName": entryName}, function(entry) {
             updateEntry($entryView, entry).removeClass("new");
+            removeDuplicatesOf($entryView);
         }, "json");
     }
 
