@@ -2,7 +2,7 @@
   (:require [techwall.db :as db]))
 
 (defn all [] (db/select "SELECT * FROM technologies"))
-(defn find-by-id [id] (db/select-one "SELECT id-name FROM technologies WHERE id = ?" id))
+(defn find-by-id [id] (db/select-one "SELECT id, name FROM technologies WHERE id = ?" id))
 (defn find-by-name [name] (db/select-one "SELECT id, name FROM technologies WHERE UPPER(name) = UPPER(?)" name))
 
 (defn- insert [name] (db/do-insert "INSERT INTO technologies (name)
