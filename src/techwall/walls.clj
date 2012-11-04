@@ -1,6 +1,6 @@
 (ns techwall.walls
-  (:use techwall.db)
   (:require [clojureql.core :as ql]
+            [techwall.db :as db] 
             [techwall.technologies :as tech]))
 
 (def ^{:private true} wall-data-stmt
@@ -21,7 +21,7 @@
 
 (defn wall [wall-id]
   (let [wall-name @(ql/pick (ql/select (ql/table :walls) (ql/where (= :id wall-id))) :name)
-        data (db-select wall-data-stmt wall-id) 
+        data (db/select wall-data-stmt wall-id)
         categories (reduce (fn [result [[category-id category-name] datum]]
                              (conj result {:id category-id :name category-name :entries
                                            (map #(identity {:id (:technology_id %) :name (:technology_name %)})

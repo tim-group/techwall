@@ -1,18 +1,23 @@
 (ns techwall.technologies
-  (:use techwall.db)
-  (:require [clojureql.core :as ql]))
+  (:require [techwall.db :as db]))
 
-(defn all [] @(ql/table :technologies))
+(defn all [] (db/select "SELECT * FROM technologies"))
+(defn find-by-id [id] (db/select-one "SELECT id-name FROM technologies WHERE id = ?" id))
+(defn find-by-name [name] (db/select-one "SELECT id, name FROM technologies WHERE UPPER(name) = UPPER(?)" name))
+
+(defn- insert [name] (db/do-insert "INSERT INTO technologies (name)
+                                    SELECT ? FROM DUAL
+                                     WHERE NOT EXISTS (SELECT 1
+                                                 FROM technologies
+                                                WHERE UPPER(name) = UPPER(?))" name name))
 
 (defn find-or-make
   ([id name]
-    (if-let [actual-name @(ql/pick (ql/select (ql/table :technologies) (ql/where (= :id id))) :name)]
-      {:id id :name actual-name}
+    (if-let [existing (find-by-id id)]
+      existing
       (find-or-make name)))
   ([name]
-    (if-let [[id actual-name] @(ql/pick (ql/select (ql/table :technologies) (ql/where (= :upper/name (.toUpperCase name)))) [:id :name])]
-      {:id id :name actual-name}
-      (let [insert (ql/conj! (ql/table :technologies) {:name name})
-            id (:last-index (meta insert))]
-        {:id id :name name}))))
+    (if-let [id (insert name)]
+      {:id id :name name}
+      (find-by-name name))))
 
