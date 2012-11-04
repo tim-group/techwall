@@ -28,7 +28,8 @@
                                                         FROM transitions t2
                                                        WHERE t2.wall_id = t1.wall_id
                                                          AND t2.technology_id = t1.technology_id)) t
-                             ON (t.category_id = c.id)" wall-id))
+                             ON (t.category_id = c.id)
+               ORDER BY c.ordering ASC" wall-id))
 
 (defn wall [wall-id]
   (let [wall-name (:name (find-by-id wall-id))
