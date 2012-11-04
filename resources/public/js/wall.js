@@ -50,9 +50,11 @@ $(document).ready(function() {
         hintTechnologies();
         $(".add-entry").keypress(function(e) {
             if (e.keyCode === $.ui.keyCode.ENTER) {
-                var $el = $(this)
+                var $el = $(this),
                     $categoryView = $el.closest(".category");
-                persist($categoryView, createEntry($categoryView, {"name": $el.val()}).addClass("new"));
+                if ($.trim($el.val())) {
+                    persist($categoryView, createEntry($categoryView, {"name": $.trim($el.val())}).addClass("new"));
+                }
                 $el.val("");
             }
         });

@@ -6,7 +6,9 @@ $(document).ready(function() {
     }
 
     function createNewWall(name) {
-        $.post("/wall", {"name": name}, addWall, "json");
+        if ($.trim(name)) {
+            $.post("/wall", {"name": $.trim(name)}, addWall, "json");
+        }
     }
 
     $.getJSON("/walls", function(wallListJson) {
