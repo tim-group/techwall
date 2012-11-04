@@ -3,13 +3,13 @@
 
 (defn all [] (db/select "SELECT * FROM technologies"))
 (defn find-by-id [id] (db/select-one "SELECT id, name FROM technologies WHERE id = ?" id))
-(defn find-by-name [name] (db/select-one "SELECT id, name FROM technologies WHERE UPPER(name) = UPPER(?)" name))
+(defn find-by-name [name] (db/select-one "SELECT id, name FROM technologies WHERE upper_name = UPPER(?)" name))
 
 (defn- insert [name] (db/do-insert "INSERT INTO technologies (name)
                                     SELECT ? FROM DUAL
                                      WHERE NOT EXISTS (SELECT 1
                                                  FROM technologies
-                                                WHERE UPPER(name) = UPPER(?))" name name))
+                                                WHERE upper_name = UPPER(?))" name name))
 
 (defn find-or-make
   ([id name]
