@@ -17,7 +17,7 @@
   (GET "/wall/:wallId" [wallId] (json-response-of (walls/wall wallId)))
   (POST "/wall" [name] (json-response-of (walls/add-wall name)))
   (POST "/wall/:wallId/category/:categoryId/entry" [wallId categoryId techId techName]
-        (json-response-of (walls/add-entity wallId categoryId techId techName)))
+        (json-response-of (walls/add-entry wallId categoryId techId techName)))
   (route/resources "/")
   (route/not-found "Not Found"))
 
