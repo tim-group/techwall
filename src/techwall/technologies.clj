@@ -1,10 +1,8 @@
 (ns techwall.technologies
   (:use techwall.db)
-  (:require [cheshire.core :as json]
-            [clojureql.core :as ql]))
+  (:require [clojureql.core :as ql]))
 
-(defn all [] 
-  {:headers {"Content-Type" "application/json"} :body (json/generate-string @(ql/table :technologies))})
+(defn all [] @(ql/table :technologies))
 
 (defn find-or-make
   ([id name]

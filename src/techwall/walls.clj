@@ -1,7 +1,6 @@
 (ns techwall.walls
   (:use techwall.db)
-  (:require [cheshire.core :as json]
-            [clojureql.core :as ql]
+  (:require [clojureql.core :as ql]
             [techwall.technologies :as tech]))
 
 (def ^{:private true} wall-data-stmt
@@ -18,8 +17,7 @@
                                               AND t2.technology_id = t1.technology_id)) t
                   ON (t.category_id = c.id)")
 
-(defn all [] 
-  {:headers {"Content-Type" "application/json"} :body (json/generate-string @(ql/table :walls))})
+(defn all [] @(ql/table :walls))
 
 (defn wall [wall-id]
   (let [wall-name @(ql/pick (ql/select (ql/table :walls) (ql/where (= :id wall-id))) :name)
@@ -29,10 +27,10 @@
                                            (map #(identity {:id (:technology_id %) :name (:technology_name %)})
                                                 (filter :technology_id datum))}))
                            [] (group-by (fn [x] [(:category_id x) (:category_name x)]) data))]
-    {:headers {"Content-Type" "application/json"} :body (json/generate-string {:id wall-id :name wall-name :categories categories})}))
+    {:id wall-id :name wall-name :categories categories}))
 
 (defn add-entity [wall-id category-id tech-id tech-name]
   (let [technology (tech/find-or-make tech-id tech-name)]
     (ql/conj! (ql/table :transitions) {:wall_id wall-id :category_id category-id :technology_id (:id technology) :added 1})
-    {:headers {"Content-Type" "application/json"} :body (json/generate-string technology)}))
+    technology))
 
