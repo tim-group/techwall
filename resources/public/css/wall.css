@@ -1,14 +1,24 @@
+.category {
+}
+.name {
+    background: #444;
+    text-align: center;
+    margin: 5px;
+}
 .entry-list {
     list-style-type: none;
-    margin: 0;
-    padding: 0;
+    background: none repeat scroll 0 0 #444;
     float: left;
+    margin: 5px;
+    padding: 0 5px 5px 5px;
+    width: 11.5em;
+    min-height: 2.9em;
 }
 .entry {
-    margin: 0 5px 5px 5px;
+    margin: 5px;
     padding: 5px;
     font-size: 1.2em;
-    width: 120px;
+    width: 8.5em;
 }
 .category {
     float: left;
@@ -17,7 +27,13 @@
     width: 10em;
     font-size: 16px;
 }
+.add-box {
+    background: #444;
+    margin: 5px;
+    padding: 5px;
+}
 .add-entry {
-    width: 10em;
+    margin: 5px;
+    width: 9.5em;
     font-size: 16px;
 }
