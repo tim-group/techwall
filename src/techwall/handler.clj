@@ -15,6 +15,7 @@
   (GET "/technologies" [] (json-response-of (tech/all)))
   (GET "/walls" [] (json-response-of (walls/all)))
   (GET "/wall/:wallId" [wallId] (json-response-of (walls/wall wallId)))
+  (POST "/wall" [name] (json-response-of (walls/add-wall name)))
   (POST "/wall/:wallId/category/:categoryId/entry" [wallId categoryId techId techName]
         (json-response-of (walls/add-entity wallId categoryId techId techName)))
   (route/resources "/")

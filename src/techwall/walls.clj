@@ -33,6 +33,10 @@
                            [] (group-by (fn [x] [(:category_id x) (:category_name x)]) data))]
     {:id wall-id :name wall-name :categories categories}))
 
+(defn add-wall [name]
+  (let [id (db/do-insert "INSERT INTO walls (name) VALUES (?)" name)]
+    {:id id :name name}))
+
 (defn add-entity [wall-id category-id tech-id tech-name]
   (let [technology (tech/find-or-make tech-id tech-name)]
     (insert wall-id category-id (:id technology))
