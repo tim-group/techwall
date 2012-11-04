@@ -7,24 +7,22 @@ $(document).ready(function() {
         return;
     }
 
-    function postJSON(url, data, successCallback) {
-        $.post(url, data, successCallback, "json");
+    function persist($categoryView, $entryView) {
+        var categoryId = $categoryView.data("categoryId"),
+            entryId = $entryView.data("entryId"),
+            entryName = $entryView.text();
+
+        $.post("/wall/" + wallId + "/category/" + categoryId + "/entry", {"techId": entryId, "techName": entryName}, function(entry) {
+            updateEntry($entryView, entry).removeClass("new");
+        }, "json");
     }
 
-    function persistMove(fromCategoryId, toCategoryId, entryId, entryName) {
-        postJSON("/wall/" + wallId + "/category/" + toCategoryId + "/entry", {"techId": entryId, "techName": entryName}, function() {
-            console.log("entry '" + entryName + "' (id: " + entryId + ") moved from: " + fromCategoryId + " to: " + toCategoryId);
-        });
-    }
+    function updateEntry($entryView, entry) {
+        return $entryView.text(entry.name).data("entryId", entry.id);
+    } 
 
-    function persistAdd(toCategoryId, entryName) {
-        postJSON("/wall/" + wallId + "/category/" + toCategoryId + "/entry", {"techName": entryName}, function() {
-            console.log("entry '" + entryName + "' added to: " + toCategoryId);
-        });
-    }
-
-    function renderEntry($categoryView, name) {
-        return $categoryView.find(".entry").realise().text(name);
+    function createEntry($categoryView, entry) {
+        return updateEntry($categoryView.find(".entry").realise(), entry);
     }
 
     function renderWall(wall) {
@@ -35,26 +33,22 @@ $(document).ready(function() {
             var categoryView = $(".category").realise().data("categoryId", category.id);
             categoryView.find(".name").text(category.name);
             $.each(category.entries, function(j, entry) {
-                renderEntry(categoryView, entry.name).data("entryId", entry.id);
+                createEntry(categoryView, entry);
             });
         });
         
         hintTechnologies();
         $(".add-entry").keypress(function(e) {
             if (e.keyCode === $.ui.keyCode.ENTER) {
-                var $el = $(this);
-                renderEntry($el.closest(".category"), $el.val()).addClass("new");
-                persistAdd($el.closest(".category").data("categoryId"), $el.val());
+                var $el = $(this)
+                    $categoryView = $el.closest(".category");
+                persist($categoryView, createEntry($categoryView, {"name": $el.val()}).addClass("new"));
                 $el.val("");
             }
         });
         
         function entryReceived(event, ui) {
-            var fromId = ui.sender.closest(".category").data("categoryId"),
-                toId = $(this).closest(".category").data("categoryId"),
-                entryId = ui.item.data("entryId"),
-                entryName = ui.item.text();
-            persistMove(fromId, toId, entryId, entryName);
+            persist($(this).closest(".category"), ui.item);
         }
         
         $(".entry-list").sortable({
