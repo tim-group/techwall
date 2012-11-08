@@ -7,7 +7,7 @@
             [techwall.technologies :as tech]
             [techwall.walls :as walls]))
 
-(defn json-response-of [data] 
+(defn- json-response-of [data] 
   {:headers {"Content-Type" "application/json"} :body (json/generate-string data)})
 
 (defroutes app-routes
