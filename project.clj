@@ -2,7 +2,7 @@
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :dependencies [[org.clojure/clojure "1.4.0"]
-                 [ring-simpleweb-adapter "0.1.0"]
+                 [ring-simpleweb-adapter "0.2.0"]
                  [compojure "1.1.3"]
                  [cheshire "4.0.3"]
                  [com.h2database/h2 "1.3.168"]
