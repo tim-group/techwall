@@ -1,8 +1,10 @@
 (function($){
 
-  var typeNames = [];
+  var typeTypes = [];
 
   function init() {
+      var $typesCombo = this.find("#techtype");
+      
       this.dialog({
           "autoOpen": false,
           "modal": true,
@@ -16,13 +18,31 @@
           },
       });
   }
+  
+  function initTypesCombo($typesCombo) {
+      if (($typesCombo).children("option").length !== 0) {
+          return;
+      }
+
+      $.each(typeTypes, function(i, type) {
+          $typesCombo.append($("<option></option>").val(type.id)
+                                                   .text(type.name)
+                                                   .css("background-color", type.colour)
+                                                   .data("colour", type.colour))
+                     .on("change", function() {
+                         $typesCombo.css("background", $(this.options[this.selectedIndex]).data("colour"));
+                     });
+      });
+  }
 
   function show($entryView) {
       var entryId = $entryView.data("entryId");
 
+      initTypesCombo(this.find("#techtype"));
+
       this.find("#id").val(entryId);
       this.find("#name").val($entryView.text());
-      this.find("#techtype").val("").autocomplete({ source: typeNames });
+      this.find("#techtype").val(0).change();
       this.find("#description").val("");
       this.find("#notes").val("");
       this.dialog("open");
@@ -35,9 +55,7 @@
   }
 
   function hintTypes(types) {
-      $.each(types, function(i, type) {
-          typeNames.push(type.name);
-      });
+      typeTypes = types;
   }
   
   $.getJSON("/techtypes", hintTypes);
