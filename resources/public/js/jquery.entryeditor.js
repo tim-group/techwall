@@ -1,5 +1,7 @@
 (function($){
 
+  var typeNames = [];
+
   function init() {
       this.dialog({
           "autoOpen": false,
@@ -14,13 +16,13 @@
           },
       });
   }
-    
+
   function show($entryView) {
       var entryId = $entryView.data("entryId");
 
       this.find("#id").val(entryId);
       this.find("#name").val($entryView.text());
-      this.find("#techtype").val("");
+      this.find("#techtype").val("").autocomplete({ source: typeNames });
       this.find("#description").val("");
       this.find("#notes").val("");
       this.dialog("open");
@@ -31,6 +33,14 @@
           f.apply($(this), args);
       });
   }
+
+  function hintTypes(types) {
+      $.each(types, function(i, type) {
+          typeNames.push(type.name);
+      });
+  }
+  
+  $.getJSON("/techtypes", hintTypes);
 
   $.fn.entryeditor = function(method, $entryView) {
       if (method === "show") {
