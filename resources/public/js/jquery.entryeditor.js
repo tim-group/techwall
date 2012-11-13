@@ -1,32 +1,30 @@
 (function($){
 
-  var methods = {
-      "init" : function() {
-          this.dialog({
-              "autoOpen": false,
-              "modal": true,
-              "buttons": {
-                  "Save": function() {
-                      $(this).dialog("close");
-                  },
-                  "Cancel": function() {
-                      $(this).dialog("close");
-                  }
+  function init() {
+      this.dialog({
+          "autoOpen": false,
+          "modal": true,
+          "buttons": {
+              "Save": function() {
+                  $(this).dialog("close");
               },
-          });
-      },
-      "show" : function($entryView) {
-          var entryId = $entryView.data("entryId");
-          $("#edit-tech").find("#id").val(entryId);
-          $("#edit-tech").find("#name").val($entryView.text());
-          $("#edit-tech").find("#techtype").val("");
-          $("#edit-tech").find("#description").val("");
-          $("#edit-tech").find("#notes").val("");
-          $("#edit-tech").dialog("open");
+              "Cancel": function() {
+                  $(this).dialog("close");
+              }
+          },
+      });
+  }
+    
+  function show($entryView) {
+      var entryId = $entryView.data("entryId");
 
-          this.dialog("open");
-      }
-  };
+      this.find("#id").val(entryId);
+      this.find("#name").val($entryView.text());
+      this.find("#techtype").val("");
+      this.find("#description").val("");
+      this.find("#notes").val("");
+      this.dialog("open");
+  }
 
   function exec(f, $targets, args) {
       return $targets.each(function() {
@@ -34,13 +32,10 @@
       });
   }
 
-  $.fn.entryeditor = function(method) {
-      if (methods[method]) {
-          return exec(methods[method], this, Array.prototype.slice.call(arguments, 1))
-      } else if (typeof method === "object" || ! method) {
-          return exec(methods.init, this, arguments);
-      } else {
-          $.error("Method " +  method + " does not exist on jQuery.entryeditor");
+  $.fn.entryeditor = function(method, $entryView) {
+      if (method === "show") {
+          return exec(show, this, [$entryView]);
       }
+      return exec(init, this);
   };
 })(jQuery);
