@@ -34,3 +34,10 @@
 #wall-list a:hover {
     background: none;
 }
+div.add-box {
+    margin: 0 auto;
+    width: 940px;
+}
+div.add-box label {
+    color: #ffffff;
+}
