@@ -2,6 +2,19 @@
 
   var typeTypes = [];
 
+  function save($dialog) {
+      $.ajax({
+          "type": "PUT",
+          "url": "/technology/" + $dialog.find("#id").val(),
+          "data": {
+              "name":        $dialog.find("#name").val(),
+              "techtypeid":  $dialog.find("#techtype").val(),
+              "description": $dialog.find("#description").val()
+          },
+          "dataType": "json"
+      });
+  }
+  
   function init() {
       var $typesCombo = this.find("#techtype");
       
@@ -10,6 +23,7 @@
           "modal": true,
           "buttons": {
               "Save": function() {
+                  save($(this));
                   $(this).dialog("close");
               },
               "Cancel": function() {
@@ -20,7 +34,7 @@
   }
   
   function initTypesCombo($typesCombo) {
-      if (($typesCombo).children("option").length !== 0) {
+      if ($typesCombo.children("option").length !== 0) {
           return;
       }
 
@@ -36,16 +50,18 @@
   }
 
   function show($entryView) {
-      var entryId = $entryView.data("entryId");
+      var entryId = $entryView.data("entryId"),
+          $dialog = this;
 
-      initTypesCombo(this.find("#techtype"));
-
-      this.find("#id").val(entryId);
-      this.find("#name").val($entryView.text());
-      this.find("#techtype").val(0).change();
-      this.find("#description").val("");
-      this.find("#notes").val("");
-      this.dialog("open");
+      initTypesCombo($dialog.find("#techtype"));
+      $.getJSON("/technology/" + entryId, function(technology) {
+          $dialog.find("#id").val(entryId);
+          $dialog.find("#name").val(technology.name);
+          $dialog.find("#techtype").val(technology.techtypeid).change();
+          $dialog.find("#description").val(technology.description);
+          $dialog.find("#notes").val("");
+          $dialog.dialog("open");
+      });
   }
 
   function exec(f, $targets, args) {

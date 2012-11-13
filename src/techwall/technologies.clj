@@ -2,8 +2,14 @@
   (:require [techwall.db :as db]))
 
 (defn all [] (db/select "SELECT id, name FROM technologies"))
-(defn find-by-id [id] (db/select-one "SELECT id, name FROM technologies WHERE id = ?" id))
-(defn find-by-name [name] (db/select-one "SELECT id, name FROM technologies WHERE upper_name = UPPER(?)" name))
+
+(defn find-by-id [id] (db/select-one "SELECT id, name, techtype_id as techtypeid, description
+                                        FROM technologies
+                                       WHERE id = ?" id))
+
+(defn find-by-name [name] (db/select-one "SELECT id, name, techtype_id as techtypeid, description
+                                            FROM technologies
+                                           WHERE upper_name = UPPER(?)" name))
 
 (defn all-types [] (db/select "SELECT id, name, colour FROM techtypes"))
 
@@ -13,6 +19,11 @@
                                                  FROM technologies
                                                 WHERE upper_name = UPPER(?))
                                      GROUP BY 1" name name))
+
+(defn update-tech [id name techtypeid description]
+  (db/do-update "UPDATE technologies
+                    SET name = ?, techtype_id = ?, description = ?
+                  WHERE id = ?" name techtypeid description id))
 
 (defn find-or-make
   ([id name]

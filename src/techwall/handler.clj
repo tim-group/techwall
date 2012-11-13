@@ -18,6 +18,9 @@
 (defroutes app-routes
   (GET "/" [] (resp/redirect "/index.html"))
   (GET "/technologies" [] (json-response-of (tech/all)))
+  (GET "/technology/:tech-id" [tech-id] (json-response-of (tech/find-by-id tech-id)))
+  (PUT "/technology/:tech-id" [tech-id name techtypeid description notes]
+       (json-response-of (tech/update-tech tech-id name techtypeid description)))
   (GET "/techtypes" [] (json-response-of (tech/all-types)))
   (GET "/walls" [] (json-response-of (walls/all)))
   (GET "/wall/:wallId" [wallId] (json-response-of (walls/wall wallId)))

@@ -15,6 +15,9 @@
   ((keyword "scope_identity()")
     (jdbc/with-connection schema/db (jdbc/do-prepared-return-keys stmt params))))
 
+(defn do-update [stmt & params]
+  (jdbc/with-connection schema/db (jdbc/do-prepared stmt params)))
+
 (defn select [query & params]
   (jdbc/with-connection schema/db
     (jdbc/with-query-results res
