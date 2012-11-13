@@ -21,7 +21,7 @@
                             NAME   VARCHAR NOT NULL,
                             COLOUR VARCHAR NOT NULL)"
    " ALTER TABLE TECHTYPES ADD CONSTRAINT UQ_TECHTYPES_NAME UNIQUE (NAME)"
-   "INSERT INTO  TECHTYPES (NAME, COLOUR) VALUES ('Misc', '#666'), ('Language', '#c20'), ('Framework', '#2c0'), ('Library', '#02c'), ('Database', '#660')"
+   "INSERT INTO  TECHTYPES (NAME, COLOUR) VALUES ('Misc', '#ddd'), ('Language', '#c20'), ('Framework', '#f81'), ('Library', '#2c0'), ('Database', '#68f')"
 
    "CREATE TABLE TECHNOLOGIES (ID          INT PRIMARY KEY AUTO_INCREMENT,
                                NAME        VARCHAR NOT NULL,
