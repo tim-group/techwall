@@ -28,8 +28,10 @@ $(document).ready(function() {
     }
 
     function updateEntry($entryView, entry) {
-        return $entryView.text(entry.name).data("entryId", entry.id);
-    } 
+        return $entryView.text(entry.name).data("entryId", entry.id).dblclick(function() {
+            $("#edit-tech").dialog("open");
+        });
+    }
 
     function createEntry($categoryView, entry) {
         return updateEntry($categoryView.find(".entry").realise(), entry);
@@ -82,6 +84,19 @@ $(document).ready(function() {
         });
     }
 
+    $("#edit-tech").dialog({
+        "autoOpen": false,
+        "modal": true,
+        "buttons": {
+            "Save": function() {
+                $(this).dialog("close");
+            },
+            "Cancel": function() {
+                $(this).dialog("close");
+            }
+        },
+    });
+    
     $.getJSON("/wall/" + wallId, renderWall);
     $.getJSON("/technologies", hintTechnologies);
 });
