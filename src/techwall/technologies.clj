@@ -5,11 +5,12 @@
 (defn find-by-id [id] (db/select-one "SELECT id, name FROM technologies WHERE id = ?" id))
 (defn find-by-name [name] (db/select-one "SELECT id, name FROM technologies WHERE upper_name = UPPER(?)" name))
 
-(defn- insert [name] (db/do-insert "INSERT INTO technologies (name)
-                                    SELECT ? FROM DUAL
+(defn- insert [name] (db/do-insert "INSERT INTO technologies (name, techtype_id)
+                                    SELECT ?, MIN(id) FROM techtypes
                                      WHERE NOT EXISTS (SELECT 1
                                                  FROM technologies
-                                                WHERE upper_name = UPPER(?))" name name))
+                                                WHERE upper_name = UPPER(?))
+                                     GROUP BY 1" name name))
 
 (defn find-or-make
   ([id name]
