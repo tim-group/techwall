@@ -22,3 +22,8 @@
       (into [] res))))
 
 (defn select-one [& queryandparams] (first (apply select queryandparams)))
+
+(defn backup-to-file [] 
+  (let [file (java.io.File/createTempFile "techwall-backup" ".zip")]
+    (jdbc/with-connection schema/db (jdbc/do-commands (str "BACKUP TO '" (.getPath file) "'")))
+    file))
