@@ -27,10 +27,12 @@ $(document).ready(function() {
         }, "json");
     }
 
+    function handleEntryEdit() {
+        $("#edit-tech").entryeditor("show", $(this));
+    }
+
     function updateEntry($entryView, entry) {
-        return $entryView.text(entry.name).data("entryId", entry.id).dblclick(function() {
-            $("#edit-tech").dialog("open");
-        });
+        return $entryView.text(entry.name).data("entryId", entry.id).dblclick(handleEntryEdit);
     }
 
     function createEntry($categoryView, entry) {
@@ -84,18 +86,7 @@ $(document).ready(function() {
         });
     }
 
-    $("#edit-tech").dialog({
-        "autoOpen": false,
-        "modal": true,
-        "buttons": {
-            "Save": function() {
-                $(this).dialog("close");
-            },
-            "Cancel": function() {
-                $(this).dialog("close");
-            }
-        },
-    });
+    $("#edit-tech").entryeditor();
     
     $.getJSON("/wall/" + wallId, renderWall);
     $.getJSON("/technologies", hintTechnologies);

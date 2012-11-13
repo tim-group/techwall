@@ -8,6 +8,7 @@
         <script type="text/javascript" src="/js/jquery-1.8.2.min.js"></script>
         <script type="text/javascript" src="/js/jquery-ui-1.9.0.custom.min.js"></script>
         <script type="text/javascript" src="/js/jquery.realisr.js"></script>
+        <script type="text/javascript" src="/js/jquery.entryeditor.js"></script>
         <script type="text/javascript" src="/js/wall.js"></script>
     </head>
     <body>
@@ -27,13 +28,14 @@
           <form>
             <fieldset>
                 <label for="name">Name</label>
+                <input type="hidden" name="id" id="id" class="text ui-widget-content ui-corner-all" />
                 <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
-                <label for="type">Category</label>
-                <input type="text" name="type" id="type" value="" class="text ui-widget-content ui-corner-all" />
+                <label for="techtype">Category</label>
+                <input type="text" name="techtype" id="techtype" value="" class="text ui-widget-content ui-corner-all" />
                 <label for="description">Technology Description</label>
-                <input type="text" name="description" id="description" value="" class="text ui-widget-content ui-corner-all" />
+                <textarea name="description" id="description" class="text ui-widget-content ui-corner-all"></textarea>
                 <label for="notes">Notes for usage on this wall</label>
-                <input type="text" name="notes" id="notes" value="" class="text ui-widget-content ui-corner-all" />
+                <textarea name="notes" id="notes" class="text ui-widget-content ui-corner-all" ></textarea>
             </fieldset>
           </form>
         </div>
