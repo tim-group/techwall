@@ -1,5 +1,6 @@
 $(document).ready(function() {
     var technologyNames = [],
+        colourmap = [],
         wallId = decodeURIComponent((new RegExp("[?|&]id=([\\d]+)").exec(location.search)||[,""])[1])||null;
 
     if (!wallId) {
@@ -31,8 +32,19 @@ $(document).ready(function() {
         $("#edit-tech").entryeditor("show", $(this));
     }
 
+    function applyColour($entryView) {
+        var techtypeId = $entryView.data("techtypeId");
+        if (techtypeId && colourmap[techtypeId]) {
+            $entryView.css("background-color", colourmap[techtypeId]);
+        }
+        return $entryView;
+    }
+
     function updateEntry($entryView, entry) {
-        return $entryView.text(entry.name).data("entryId", entry.id).dblclick(handleEntryEdit);
+        return applyColour($entryView.text(entry.name)
+                                     .data("entryId", entry.id)
+                                     .data("techtypeId", entry.techtypeid)
+                                     .dblclick(handleEntryEdit));
     }
 
     function createEntry($categoryView, entry) {
@@ -52,6 +64,8 @@ $(document).ready(function() {
         });
         
         hintTechnologies();
+        applyColours();
+        
         $(".add-entry").keypress(function(e) {
             if (e.keyCode === $.ui.keyCode.ENTER) {
                 var $el = $(this),
@@ -86,8 +100,21 @@ $(document).ready(function() {
         });
     }
 
+    function applyColours(techtypes) {
+        if (techtypes) {
+            colourmap = [];
+            $.each(techtypes, function(i, techtype) {
+                colourmap[techtype.id] = (techtype.colour);
+            });
+        }
+        $("li.entry").each(function(i, entryView) {
+            applyColour($(entryView));
+        });
+    }
+    
     $("#edit-tech").entryeditor();
     
     $.getJSON("/wall/" + wallId, renderWall);
     $.getJSON("/technologies", hintTechnologies);
+    $.getJSON("/techtypes", applyColours);
 });

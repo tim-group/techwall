@@ -17,9 +17,9 @@
                                                               WHERE name = ?)" name name))
 
 (defn- assignments-by-id [wall-id]
-  (db/select "SELECT c.id AS category_id, c.name AS category_name, t.technology_id, t.technology_name
+  (db/select "SELECT c.id AS category_id, c.name AS category_name, t.technology_id, t.technology_name, t.techtype_id
                 FROM categories c
-                LEFT OUTER JOIN (SELECT t1.category_id, g.id AS technology_id, g.name AS technology_name
+                LEFT OUTER JOIN (SELECT t1.category_id, g.id AS technology_id, g.name AS technology_name, g.techtype_id
                                    FROM transitions t1
                                    JOIN technologies g ON (g.id = t1.technology_id)
                                   WHERE t1.wall_id = ?
@@ -36,7 +36,7 @@
         data (assignments-by-id wall-id)
         categories (reduce (fn [result [[category-id category-name] datum]]
                              (conj result {:id category-id :name category-name :entries
-                                           (map #(identity {:id (:technology_id %) :name (:technology_name %)})
+                                           (map #(identity {:id (:technology_id %) :name (:technology_name %) :techtypeid (:techtype_id %)})
                                                 (filter :technology_id datum))}))
                            [] (group-by (fn [x] [(:category_id x) (:category_name x)]) data))]
     {:id wall-id :name wall-name :categories categories}))

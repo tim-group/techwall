@@ -31,7 +31,6 @@
       existing
       (find-or-make name)))
   ([name]
-    (if-let [id (insert name)]
-      {:id id :name name}
-      (find-by-name name))))
+    (insert name)
+    (find-by-name name)))
 
