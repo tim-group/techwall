@@ -23,7 +23,8 @@
 (defn update-tech [id name techtypeid description]
   (db/do-update "UPDATE technologies
                     SET name = ?, techtype_id = ?, description = ?
-                  WHERE id = ?" name techtypeid description id))
+                  WHERE id = ?" name techtypeid description id)
+  (find-by-id id))
 
 (defn find-or-make
   ([id name]

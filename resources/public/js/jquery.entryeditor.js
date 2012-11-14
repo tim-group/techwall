@@ -1,6 +1,7 @@
 (function($){
 
-  var typeTypes = [];
+  var typeTypes = [],
+      successCallback = function() {};
 
   function save($dialog) {
       $.ajax({
@@ -11,6 +12,7 @@
               "techtypeid":  $dialog.find("#techtype").val(),
               "description": $dialog.find("#description").val()
           },
+          "success": successCallback,
           "dataType": "json"
       });
   }
@@ -49,9 +51,9 @@
       });
   }
 
-  function show($entryView) {
-      var entryId = $entryView.data("entryId"),
-          $dialog = this;
+  function show(entryId, successfulSaveCallback) {
+      var $dialog = this;
+      successCallback = successfulSaveCallback;
 
       initTypesCombo($dialog.find("#techtype"));
       $.getJSON("/technology/" + entryId, function(technology) {
@@ -76,9 +78,9 @@
   
   $.getJSON("/techtypes", hintTypes);
 
-  $.fn.entryeditor = function(method, $entryView) {
+  $.fn.entryeditor = function(method, entryId, saveCallback) {
       if (method === "show") {
-          return exec(show, this, [$entryView]);
+          return exec(show, this, [entryId, saveCallback]);
       }
       return exec(init, this);
   };

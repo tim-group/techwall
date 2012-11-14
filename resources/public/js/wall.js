@@ -29,7 +29,14 @@ $(document).ready(function() {
     }
 
     function handleEntryEdit() {
-        $("#edit-tech").entryeditor("show", $(this));
+        var $entryView = $(this),
+            entryId = $entryView.data("entryId");
+        
+        $("#edit-tech").entryeditor("show", entryId, function(entry) {
+            if (entryId === entry.id) {
+                updateEntry($entryView, entry);
+            }
+        });
     }
 
     function applyColour($entryView) {
