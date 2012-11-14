@@ -29,9 +29,9 @@
   (POST "/wall/:wallId/category/:categoryId/entry" [wallId categoryId techId techName]
         (json-response-of (walls/add-entry wallId categoryId techId techName)))
   (GET "/wall/:wall-id/technology/:technology-id/note" [wall-id technology-id]
-       (json-response-of (notes/find wall-id technology-id)))
+       (json-response-of (notes/find-note wall-id technology-id)))
   (PUT "/wall/:wall-id/technology/:technology-id/note" [wall-id technology-id note]
-       (json-response-of (notes/write wall-id technology-id note)))
+       (json-response-of (notes/write-note wall-id technology-id note)))
   (route-backup "/backup.zip")
   (route/resources "/")
   (route/not-found "Not Found"))
