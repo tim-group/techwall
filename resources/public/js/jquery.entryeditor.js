@@ -16,7 +16,7 @@
           "dataType": "json"
       });
   }
-  
+
   function init() {
       var $typesCombo = this.find("#techtype");
       
@@ -35,7 +35,7 @@
           },
       });
   }
-  
+
   function initTypesCombo($typesCombo) {
       if ($typesCombo.children("option").length !== 0) {
           return;
@@ -76,7 +76,7 @@
   function hintTypes(types) {
       typeTypes = types;
   }
-  
+
   $.getJSON("/techtypes", hintTypes);
 
   $.fn.entryeditor = function(method, entryId, saveCallback) {
