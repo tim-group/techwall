@@ -7,6 +7,7 @@
             [ring.middleware.file-info :as file-info]
             [techwall.technologies :as tech]
             [techwall.walls :as walls]
+            [techwall.notes :as notes]
             [techwall.db :as db]))
 
 (defn- json-response-of [data] 
@@ -27,6 +28,10 @@
   (POST "/wall" [name] (json-response-of (walls/add-wall name)))
   (POST "/wall/:wallId/category/:categoryId/entry" [wallId categoryId techId techName]
         (json-response-of (walls/add-entry wallId categoryId techId techName)))
+  (GET "/wall/:wall-id/technology/:technology-id/note" [wall-id technology-id]
+       (json-response-of (notes/find wall-id technology-id)))
+  (PUT "/wall/:wall-id/technology/:technology-id/note" [wall-id technology-id note]
+       (json-response-of (notes/write wall-id technology-id note)))
   (route-backup "/backup.zip")
   (route/resources "/")
   (route/not-found "Not Found"))

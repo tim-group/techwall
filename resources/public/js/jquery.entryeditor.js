@@ -4,15 +4,25 @@
       successCallback = function() {};
 
   function save($dialog) {
+      var entryId = $dialog.find("#id").val();
+      
       $.ajax({
           "type": "PUT",
-          "url": "/technology/" + $dialog.find("#id").val(),
+          "url": "/technology/" + entryId,
           "data": {
               "name":        $dialog.find("#name").val(),
               "techtypeid":  $dialog.find("#techtype").val(),
               "description": $dialog.find("#description").val()
           },
           "success": successCallback,
+          "dataType": "json"
+      });
+      $.ajax({
+          "type": "PUT",
+          "url": "/wall/" + $dialog.find("#wallId").val() + "/technology/" + entryId + "/note",
+          "data": {
+              "note": $dialog.find("#notes").val()
+          },
           "dataType": "json"
       });
   }
@@ -52,18 +62,25 @@
       });
   }
 
-  function show(entryId, successfulSaveCallback) {
+  function show(wallId, entryId, successfulSaveCallback) {
       var $dialog = this;
       successCallback = successfulSaveCallback;
 
+      $dialog.find("#id").val(entryId);
+      $dialog.find("#wallId").val(wallId);
+      $dialog.find("#notes").val("").prop('disabled', true);
+      
       initTypesCombo($dialog.find("#techtype"));
+      
       $.getJSON("/technology/" + entryId, function(technology) {
-          $dialog.find("#id").val(entryId);
           $dialog.find("#name").val(technology.name);
           $dialog.find("#techtype").val(technology.techtypeid).change();
           $dialog.find("#description").val(technology.description);
-          $dialog.find("#notes").val("");
           $dialog.dialog("open");
+      });
+      $.getJSON("/wall/" + wallId + "/technology/" + entryId + "/note", function(techwallnote) {
+          var note = techwallnote ? techwallnote.note : "";
+          $dialog.find("#notes").val(note).prop('disabled', false);
       });
   }
 
@@ -79,9 +96,9 @@
 
   $.getJSON("/techtypes", hintTypes);
 
-  $.fn.entryeditor = function(method, entryId, saveCallback) {
+  $.fn.entryeditor = function(method, wallId, entryId, saveCallback) {
       if (method === "show") {
-          return exec(show, this, [entryId, saveCallback]);
+          return exec(show, this, [wallId, entryId, saveCallback]);
       }
       return exec(init, this);
   };

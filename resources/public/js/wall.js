@@ -32,7 +32,7 @@ $(document).ready(function() {
         var $entryView = $(this),
             entryId = $entryView.data("entryId");
         
-        $("#edit-tech").entryeditor("show", entryId, function(entry) {
+        $("#edit-tech").entryeditor("show", wallId, entryId, function(entry) {
             if (entryId === entry.id) {
                 updateEntry($entryView, entry);
             }
