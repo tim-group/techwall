@@ -23,6 +23,7 @@
       this.dialog({
           "autoOpen": false,
           "modal": true,
+          "width": 600,
           "buttons": {
               "Save": function() {
                   save($(this));
